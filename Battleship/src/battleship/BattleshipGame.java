@@ -10,12 +10,7 @@ public class BattleshipGame {
 	private boolean runGame = true;
 	
 	public void startGame() {
-		Ocean ocean = new Ocean();
-		//Empty sea
-		//ocean.print();
-		ocean.placeAllShipsRandomly();
-		//after placing random ships
-		ocean.print();
+		
 		Scanner scanner = new Scanner(System.in);
 		while(this.runGame) {
 			System.out.println("Welcome to BattleShip Game!");
@@ -24,9 +19,20 @@ public class BattleshipGame {
 			if(input.equals("q") || input.equals("Q")) {
 				this.runGame = false;
 			}else {
+				Ocean ocean = new Ocean();
+				//Empty sea
+				//ocean.print();
+				ocean.placeAllShipsRandomly();
+				//after placing random ships
+				ocean.print();
 				while(!ocean.isGameOver()) {
 					System.out.print("Please enter two integers between 0 and 9 (included), (e.g., 2,3): ");
-					String[] coord = scanner.nextLine().split(",");
+					String s = scanner.nextLine();
+					while(s.isEmpty()) {
+						System.out.print("Please reenter: ");
+						s = scanner.nextLine();
+					}
+					String[] coord = s.split(",");
 					int row = Integer.parseInt(coord[0]);
 					int column = Integer.parseInt(coord[1]);
 					if (ocean.shootAt(row, column)) {
